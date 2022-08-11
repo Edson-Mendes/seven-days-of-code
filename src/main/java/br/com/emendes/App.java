@@ -1,8 +1,7 @@
 package br.com.emendes;
 
-import br.com.emendes.model.Movie;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
+import br.com.emendes.dto.MoviesDto;
+import br.com.emendes.exception.RequestFailedException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -10,22 +9,29 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.List;
 import java.util.Scanner;
 
 public class App {
   public static void main(String[] args) throws IOException {
     String body = sendRequest();
 
-    List<Movie> movies = parseJsonMovies(body);
+    MoviesDto moviesDto = parseJsonToMoviesDto(body);
 
-    System.out.println(titles(movies));
-    System.out.println(urlImages(movies));
-    System.out.println(years(movies));
-    System.out.println(imdbRatings(movies));
+    if (moviesDto.hasError()){
+      System.err.println(moviesDto.getErrorMessage());
+    } else {
+      moviesDto.getMovies().forEach(System.out::println);
+    }
+
   }
 
+  /**
+   * Solicita a lista dos Top250Movies da API do IMDb.
+   * @return String que representa o body da resposta.
+   * @throws RequestFailedException se houver alguma exception na requisição.
+   */
   public static String sendRequest() {
+//    TODO: Refatorar esse método.
     try {
       URI uri = new URI(String.format("https://imdb-api.com/en/API/Top250Movies/%s", requestUserApiKey()));
       HttpClient client = HttpClient.newHttpClient();
@@ -34,7 +40,7 @@ public class App {
       HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
       return response.body();
     } catch (Exception ex) {
-      throw new RuntimeException("Não foi possível executar a requisição!", ex);
+      throw new RequestFailedException("Não foi possível executar a requisição!", ex);
     }
   }
 
@@ -44,26 +50,8 @@ public class App {
     return input.nextLine();
   }
 
-  public static List<Movie> parseJsonMovies(String json) throws IOException {
+  public static MoviesDto parseJsonToMoviesDto(String json) throws IOException {
     ObjectMapper mapper = new ObjectMapper();
-    JsonNode jsonNode = mapper.readTree(json).get("items");
-
-    return mapper.readValue(jsonNode.toString(), new TypeReference<List<Movie>>() {});
-  }
-
-  public static List<String> titles(List<Movie> movies){
-    return movies.stream().map(Movie::getTitle).toList();
-  }
-
-  public static List<String> urlImages(List<Movie> movies){
-    return movies.stream().map(Movie::getUrlImage).toList();
-  }
-
-  public static List<String> years(List<Movie> movies){
-    return movies.stream().map(Movie::getYear).toList();
-  }
-
-  public static List<String> imdbRatings(List<Movie> movies){
-    return movies.stream().map(Movie::getRating).toList();
+    return mapper.readValue(json, MoviesDto.class);
   }
 }

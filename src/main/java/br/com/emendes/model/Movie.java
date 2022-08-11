@@ -2,16 +2,13 @@ package br.com.emendes.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 
-@Data
+@Getter
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
+@EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Movie {
   private String id;
