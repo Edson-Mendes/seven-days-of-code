@@ -14,13 +14,13 @@ public class HTMLGenerator {
 
   public void generate(List<Movie> movies){
     try{
-      writer.write(html());
+      writer.write(html(movies));
     }catch (IOException ioex){
       System.out.println("Erro ao gerar HTML!");
     }
   }
 
-  private String html() {
+  private String html(List<Movie> movies) {
     return String.format(
         """
         <!DOCTYPE html>
@@ -28,7 +28,7 @@ public class HTMLGenerator {
           %s
           %s
         </html>
-        """, head("Minha Página"), body());
+        """, head("Top250Movies"), body(movies));
   }
 
   private String head(String title) {
@@ -45,25 +45,24 @@ public class HTMLGenerator {
         """, title);
   }
 
-  private String body(){
-    Movie movie = Movie.builder()
-        .id("xalala")
-        .title("The Dark Knight")
-        .urlImage("https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_Ratio0.6716_AL_.jpg")
-        .year("2008")
-        .rating("9.0")
-        .build();
+  private String body(List<Movie> movies){
+    StringBuilder cards = new StringBuilder();
+
+    movies.forEach(m -> cards.append(card(m)));
 
     return String.format(
         """
           <body>
-            %s
+            <main>
+              %s
+            </main>
           </body>
-        """, card(movie));
+        """, cards);
   }
 
 
   private String card(Movie movie){
+
     return String.format(
         """
           <div class="card">

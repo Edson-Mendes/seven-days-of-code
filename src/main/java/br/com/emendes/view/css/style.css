@@ -2,24 +2,31 @@ body {
   background-color: #181616;
 }
 
+main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .card {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto 1fr 1fr 1fr 1fr auto;
   row-gap: 5px;
   width: 180px;
-  height: 323px;
-  margin: 10px auto;
+  height: 358px;
+  margin: 10px 5px;
   padding: 10px 20px;
   background-color: rgb(102, 99, 99);
   border: 1px solid transparent;
-  border-bottom: 2px solid white;
-  border-radius: 5px;
+  border-bottom: 3px solid white;
+  border-radius: 10px;
 }
 
 .card__title {
   grid-column: span 3;
-  height: 45px;
+  height: 80px;
   font-size: 1.3rem;
   font-weight: 500;
   color: #FFFFFF;

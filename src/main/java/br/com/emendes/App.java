@@ -25,14 +25,14 @@ public class App {
       System.err.println(moviesDto.getErrorMessage());
     } else {
       moviesDto.getMovies().forEach(System.out::println);
+      try (PrintWriter printWriter = new PrintWriter(PATH_VIEW + "index.html")) {
+        HTMLGenerator htmlGenerator = new HTMLGenerator(printWriter);
+        htmlGenerator.generate(moviesDto.getMovies());
+      } catch (Exception ex) {
+        System.err.println("Something went wrong!");
+      }
     }
 
-    try(PrintWriter printWriter = new PrintWriter(PATH_VIEW+"index.html")){
-      HTMLGenerator htmlGenerator = new HTMLGenerator(printWriter);
-      htmlGenerator.generate(moviesDto.getMovies());
-    }catch(Exception ex){
-      System.err.println("Something went wrong!");
-    }
 
   }
 
