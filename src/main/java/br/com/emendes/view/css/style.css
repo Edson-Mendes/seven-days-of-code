@@ -1,0 +1,42 @@
+body {
+  background-color: #181616;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto 1fr 1fr 1fr 1fr auto;
+  row-gap: 5px;
+  width: 180px;
+  height: 323px;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background-color: rgb(102, 99, 99);
+  border: 1px solid transparent;
+  border-bottom: 2px solid white;
+  border-radius: 5px;
+}
+
+.card__title {
+  grid-column: span 3;
+  height: 45px;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #FFFFFF;
+}
+
+.card__image {
+  grid-column: span 3;
+  grid-row: span 4;
+  width: 100%;
+  height: 100%;
+}
+
+.card__info {
+  grid-column: span 3;
+  height: 20px;
+  padding: 5px 0 0 0;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  color: #FFFFFF;
+}

@@ -2,9 +2,11 @@ package br.com.emendes;
 
 import br.com.emendes.dto.MoviesDto;
 import br.com.emendes.exception.RequestFailedException;
+import br.com.emendes.generator.HTMLGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -12,6 +14,8 @@ import java.net.http.HttpResponse;
 import java.util.Scanner;
 
 public class App {
+
+  private static String PATH_VIEW = "src/main/java/br/com/emendes/view/";
   public static void main(String[] args) throws IOException {
     String body = sendRequest();
 
@@ -21,6 +25,13 @@ public class App {
       System.err.println(moviesDto.getErrorMessage());
     } else {
       moviesDto.getMovies().forEach(System.out::println);
+    }
+
+    try(PrintWriter printWriter = new PrintWriter(PATH_VIEW+"index.html")){
+      HTMLGenerator htmlGenerator = new HTMLGenerator(printWriter);
+      htmlGenerator.generate(moviesDto.getMovies());
+    }catch(Exception ex){
+      System.err.println("Something went wrong!");
     }
 
   }
