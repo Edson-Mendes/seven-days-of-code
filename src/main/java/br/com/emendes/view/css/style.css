@@ -24,6 +24,11 @@ main {
   border-radius: 10px;
 }
 
+.card:hover {
+    border: 1px solid orange;
+    border-bottom: 3px solid orange;
+}
+
 .card__title {
   grid-column: span 3;
   height: 80px;

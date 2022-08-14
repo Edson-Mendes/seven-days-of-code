@@ -9,7 +9,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 @AllArgsConstructor
-public class ImdbApiClient {
+public class ImdbAPIClient implements APIClient{
 
   private final String uri;
   private final String apiKey;

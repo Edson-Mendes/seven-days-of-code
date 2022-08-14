@@ -1,6 +1,5 @@
 package br.com.emendes.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -10,8 +9,8 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Movie {
+public class Movie implements Content {
+
   private String id;
   private String title;
   private String year;
@@ -19,4 +18,5 @@ public class Movie {
   private String urlImage;
   @JsonProperty("imDbRating")
   private String rating;
+
 }

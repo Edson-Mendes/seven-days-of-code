@@ -1,7 +1,6 @@
 package br.com.emendes.dto;
 
-import br.com.emendes.model.Movie;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import br.com.emendes.model.Content;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -12,8 +11,8 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class MoviesDto {
-  @JsonProperty("items")
-  private List<Movie> movies;
+
+  private List<Content> items;
   private String errorMessage;
 
   public boolean hasError(){

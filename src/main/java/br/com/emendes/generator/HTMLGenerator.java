@@ -1,6 +1,6 @@
 package br.com.emendes.generator;
 
-import br.com.emendes.model.Movie;
+import br.com.emendes.model.Content;
 import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
@@ -12,7 +12,7 @@ public class HTMLGenerator {
 
   private final Writer writer;
 
-  public void generate(List<Movie> movies){
+  public void generate(List<Content> movies){
     try{
       writer.write(html(movies));
     }catch (IOException ioex){
@@ -20,7 +20,7 @@ public class HTMLGenerator {
     }
   }
 
-  private String html(List<Movie> movies) {
+  private String html(List<Content> movies) {
     return String.format(
         """
         <!DOCTYPE html>
@@ -45,7 +45,7 @@ public class HTMLGenerator {
         """, title);
   }
 
-  private String body(List<Movie> movies){
+  private String body(List<Content> movies){
     StringBuilder cards = new StringBuilder();
 
     movies.forEach(m -> cards.append(card(m)));
@@ -60,8 +60,7 @@ public class HTMLGenerator {
         """, cards);
   }
 
-
-  private String card(Movie movie){
+  private String card(Content movie){
 
     return String.format(
         """
