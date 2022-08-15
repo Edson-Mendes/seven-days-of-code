@@ -1,20 +1,21 @@
 package br.com.emendes.parser;
 
-import br.com.emendes.dto.MoviesDto;
+import br.com.emendes.dto.IMDbDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 
+import java.io.File;
 import java.io.IOException;
 
 @AllArgsConstructor
-public class ImdbMovieDtoJsonParser implements JsonParser<MoviesDto> {
+public class ImdbMovieDtoJsonParser implements JsonParser<IMDbDto> {
 
   private String json;
 
   @Override
-  public MoviesDto parse() throws IOException {
+  public IMDbDto parse() throws IOException {
     ObjectMapper mapper = new ObjectMapper();
-    return mapper.readValue(json, MoviesDto.class);
+    return mapper.readValue(json, IMDbDto.class);
   }
 
 }

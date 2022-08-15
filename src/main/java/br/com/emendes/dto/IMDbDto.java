@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @EqualsAndHashCode
 @ToString
-public class MoviesDto {
+public class IMDbDto {
 
   private List<Content> items;
   private String errorMessage;

@@ -1,13 +1,14 @@
 package br.com.emendes;
 
 import br.com.emendes.client.ImdbAPIClient;
-import br.com.emendes.dto.MoviesDto;
+import br.com.emendes.dto.IMDbDto;
 import br.com.emendes.generator.HTMLGenerator;
 import br.com.emendes.parser.ImdbMovieDtoJsonParser;
 import br.com.emendes.parser.JsonParser;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class App {
@@ -27,17 +28,19 @@ public class App {
     String body = client.getBody();
 
 //    Parse do json
-    JsonParser<MoviesDto> jsonParser = new ImdbMovieDtoJsonParser(body);
-    MoviesDto moviesDto = jsonParser.parse();
+    JsonParser<IMDbDto> jsonParser = new ImdbMovieDtoJsonParser(body);
+    IMDbDto imDbDto = jsonParser.parse();
 
-    if (moviesDto.hasError()){
-      System.err.println(moviesDto.getErrorMessage());
+    if (imDbDto.hasError()){
+      System.err.println(imDbDto.getErrorMessage());
     } else {
-      moviesDto.getItems().forEach(System.out::println);
+      Collections.sort(imDbDto.getItems());
+      imDbDto.getItems().forEach(System.out::println);
+
       try (PrintWriter printWriter = new PrintWriter(PATH_VIEW + "index.html")) {
         HTMLGenerator htmlGenerator = new HTMLGenerator(printWriter);
 //        Gerar HTML
-        htmlGenerator.generate(moviesDto.getItems());
+        htmlGenerator.generate(imDbDto.getItems());
       } catch (Exception ex) {
         System.err.println("Something went wrong!");
       }
